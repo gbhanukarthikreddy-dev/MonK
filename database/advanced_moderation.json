@@ -1,0 +1,33 @@
+{
+    "guilds": {
+        "1522992648661635184": {
+            "case_counter": 0,
+            "cases": [],
+            "automod": {
+                "enabled": true,
+                "anti_spam": true,
+                "anti_link": true,
+                "anti_invite": true,
+                "anti_mass_mention": true,
+                "spam_messages": 6,
+                "spam_window": 8,
+                "mention_limit": 5,
+                "action": "timeout",
+                "timeout_seconds": 600,
+                "ignored_channels": [],
+                "ignored_roles": []
+            },
+            "jail": {
+                "role_id": null,
+                "saved_roles": {}
+            },
+            "temporary_roles": {},
+            "sticky_messages": {},
+            "nickname_locks": {},
+            "lockdown": {
+                "active": false,
+                "channels": {}
+            }
+        }
+    }
+}

@@ -1,0 +1,137 @@
+{
+    "users": {
+        "1396844211038458018": {
+            "playlists": {},
+            "favorites": [],
+            "tracks_requested": 7
+        }
+    },
+    "guilds": {
+        "1506883615118852157": {
+            "volume": 70,
+            "autoplay": true,
+            "history": [
+                {
+                    "title": "Sahiba",
+                    "uri": "https://www.youtube.com/watch?v=tNc2coVC2aw",
+                    "author": "Aditya Rikhari",
+                    "length": 191000,
+                    "source": "youtube",
+                    "requester_id": 1396844211038458018,
+                    "played_at": "2026-07-15T21:57:26.075073+00:00"
+                },
+                {
+                    "title": "Believer",
+                    "uri": "https://www.youtube.com/watch?v=Kx7B-XvmFtE",
+                    "author": "Imagine Dragons",
+                    "length": 205000,
+                    "source": "youtube",
+                    "requester_id": 1396844211038458018,
+                    "played_at": "2026-07-15T22:01:44.003589+00:00"
+                },
+                {
+                    "title": "Maand",
+                    "author": "Bayaan, Hasan Raheem, & Rovalio",
+                    "uri": "https://www.youtube.com/watch?v=D5v0P2-WLSo",
+                    "length": 185000,
+                    "source": "youtube",
+                    "artwork": "https://yt3.googleusercontent.com/y4mkwNX6YNsLSq1ALFpYMIUGNkWVM0iVRwk519Eg_R0Uqo-zCQWzQ4sQrJGggeAxquwuuylHdB1-BFD-Eg=w1000-h1000",
+                    "requester_id": 1396844211038458018,
+                    "played_at": "2026-07-15T22:08:33.847460+00:00"
+                },
+                {
+                    "title": "Maand",
+                    "author": "Bayaan, Hasan Raheem, & Rovalio",
+                    "uri": "https://www.youtube.com/watch?v=D5v0P2-WLSo",
+                    "length": 185000,
+                    "source": "youtube",
+                    "artwork": "https://yt3.googleusercontent.com/y4mkwNX6YNsLSq1ALFpYMIUGNkWVM0iVRwk519Eg_R0Uqo-zCQWzQ4sQrJGggeAxquwuuylHdB1-BFD-Eg=w1000-h1000",
+                    "requester_id": 1396844211038458018,
+                    "played_at": "2026-07-15T22:11:10.741973+00:00"
+                },
+                {
+                    "title": "Maand",
+                    "author": "Bayaan, Hasan Raheem, & Rovalio",
+                    "uri": "https://www.youtube.com/watch?v=D5v0P2-WLSo",
+                    "length": 185000,
+                    "source": "youtube",
+                    "artwork": "https://yt3.googleusercontent.com/y4mkwNX6YNsLSq1ALFpYMIUGNkWVM0iVRwk519Eg_R0Uqo-zCQWzQ4sQrJGggeAxquwuuylHdB1-BFD-Eg=w1000-h1000",
+                    "requester_id": 1396844211038458018,
+                    "played_at": "2026-07-15T22:13:18.391966+00:00"
+                }
+            ],
+            "tracks_played": 5,
+            "player_channel_id": null,
+            "player_message_id": null
+        },
+        "1522992648661635184": {
+            "volume": 70,
+            "autoplay": false,
+            "player_channel_id": 1527076457204158736,
+            "player_message_id": 1527084738861469907,
+            "history": [
+                {
+                    "title": "Maand",
+                    "author": "Bayaan, Hasan Raheem, & Rovalio",
+                    "uri": "https://www.youtube.com/watch?v=D5v0P2-WLSo",
+                    "length": 185000,
+                    "source": "youtube",
+                    "artwork": "https://yt3.googleusercontent.com/y4mkwNX6YNsLSq1ALFpYMIUGNkWVM0iVRwk519Eg_R0Uqo-zCQWzQ4sQrJGggeAxquwuuylHdB1-BFD-Eg=w1000-h1000",
+                    "requester_id": 1396844211038458018,
+                    "played_at": "2026-07-15T22:16:42.787452+00:00"
+                },
+                {
+                    "title": "Gehra Hua (From \"Dhurandhar\")",
+                    "author": "Shashwat Sachdev",
+                    "uri": "https://www.youtube.com/watch?v=i1o1p_DD6TU",
+                    "length": 363000,
+                    "source": "youtube",
+                    "artwork": "https://i.ytimg.com/vi/i1o1p_DD6TU/mqdefault.jpg",
+                    "requester_id": null,
+                    "played_at": "2026-07-15T22:19:48.300694+00:00"
+                },
+                {
+                    "title": "Kabhii Tumhhe \u2013Official Video | Shershaah | Sidharth\u2013Kiara | Javed-Mohsin | Darshan Raval | Rashmi V",
+                    "author": "Sony Music India",
+                    "uri": "https://www.youtube.com/watch?v=ByIZIKFmHOA",
+                    "length": 221000,
+                    "source": "youtube",
+                    "artwork": "https://i.ytimg.com/vi/ByIZIKFmHOA/mqdefault.jpg",
+                    "requester_id": null,
+                    "played_at": "2026-07-15T22:25:51.475766+00:00"
+                },
+                {
+                    "title": "Tere Liye",
+                    "author": "Atif Aslam",
+                    "uri": "https://www.youtube.com/watch?v=5U5Ru0nTiUM",
+                    "length": 280000,
+                    "source": "youtube",
+                    "artwork": "https://yt3.googleusercontent.com/8rcPUY_axCJpmXE7z1tW3ipwgiVVJBmkH05BZTbzUkQ1zYooRjIb2Zfoqj9_hdQPIp0wuV3NJmMbLVA=w1000-h1000",
+                    "requester_id": 1396844211038458018,
+                    "played_at": "2026-07-15T22:27:17.475060+00:00"
+                },
+                {
+                    "title": "Mann Mera (Original Version)",
+                    "author": "Gajendra Verma",
+                    "uri": "https://www.youtube.com/watch?v=s_GR_TDK07I",
+                    "length": 228000,
+                    "source": "youtube",
+                    "artwork": "https://i.ytimg.com/vi/s_GR_TDK07I/mqdefault.jpg",
+                    "requester_id": null,
+                    "played_at": "2026-07-15T22:28:41.607142+00:00"
+                },
+                {
+                    "title": "Tere Liye",
+                    "author": "Atif Aslam",
+                    "uri": "https://www.youtube.com/watch?v=5U5Ru0nTiUM",
+                    "length": 280000,
+                    "source": "youtube",
+                    "artwork": "https://yt3.googleusercontent.com/8rcPUY_axCJpmXE7z1tW3ipwgiVVJBmkH05BZTbzUkQ1zYooRjIb2Zfoqj9_hdQPIp0wuV3NJmMbLVA=w1000-h1000",
+                    "requester_id": 1396844211038458018,
+                    "played_at": "2026-07-15T22:49:23.687652+00:00"
+                }
+            ],
+            "tracks_played": 6
+        }
+    }
+}

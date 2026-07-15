@@ -1,0 +1,36 @@
+{
+    "guilds": {
+        "1522992648661635184": {
+            "mod_logs": 1527003777515655188,
+            "welcome_channel": 1527007441160638606,
+            "leave_channel": 1523365221601906850,
+            "ticket_category": null,
+            "ticket_logs": null,
+            "music_channel": null,
+            "dj_role": null,
+            "moderator_role": null,
+            "auto_role": null,
+            "announcement_channel": null,
+            "prefix": "m",
+            "ignored_channels": [],
+            "verification_role": null,
+            "join_to_create_category": null
+        },
+        "1506883615118852157": {
+            "mod_logs": null,
+            "welcome_channel": null,
+            "leave_channel": null,
+            "ticket_category": null,
+            "ticket_logs": null,
+            "music_channel": null,
+            "dj_role": null,
+            "moderator_role": null,
+            "auto_role": null,
+            "announcement_channel": null,
+            "prefix": "m",
+            "ignored_channels": [],
+            "verification_role": null,
+            "join_to_create_category": null
+        }
+    }
+}

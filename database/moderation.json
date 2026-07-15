@@ -1,0 +1,54 @@
+{
+    "guilds": {
+        "1506883615118852157": {
+            "log_channel": null,
+            "warnings": {
+                "1490407395883483207": [
+                    {
+                        "id": 1,
+                        "moderator_id": 1396844211038458018,
+                        "reason": "test 1",
+                        "timestamp": "2026-07-15T17:20:21.355907+00:00"
+                    }
+                ]
+            },
+            "history": {
+                "1490407395883483207": [
+                    {
+                        "action": "Warn",
+                        "moderator_id": 1396844211038458018,
+                        "reason": "test 1",
+                        "duration": null,
+                        "timestamp": "2026-07-15T17:20:21.395996+00:00"
+                    }
+                ]
+            },
+            "locked_channels": {}
+        },
+        "1522992648661635184": {
+            "log_channel": 1527003777515655188,
+            "warnings": {
+                "1490407395883483207": [
+                    {
+                        "id": 1,
+                        "moderator_id": 1396844211038458018,
+                        "reason": "test",
+                        "timestamp": "2026-07-15T18:00:36.505740+00:00"
+                    }
+                ]
+            },
+            "history": {
+                "1490407395883483207": [
+                    {
+                        "action": "Warn",
+                        "moderator_id": 1396844211038458018,
+                        "reason": "test",
+                        "duration": null,
+                        "timestamp": "2026-07-15T18:00:36.527937+00:00"
+                    }
+                ]
+            },
+            "locked_channels": {}
+        }
+    }
+}

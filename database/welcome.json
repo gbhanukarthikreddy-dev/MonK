@@ -1,0 +1,26 @@
+{
+    "guilds": {
+        "1522992648661635184": {
+            "enabled": true,
+            "welcome_channel_id": 1523221697052807348,
+            "goodbye_enabled": false,
+            "goodbye_channel_id": null,
+            "title": "Welcome to {server}!",
+            "description": "Hey {mention}, welcome to **{server}**!\nYou are member **#{member_count}**.\n\nPlease read the rules, introduce yourself, and enjoy your stay.",
+            "goodbye_title": "A member has left",
+            "goodbye_description": "**{user}** has left **{server}**.\nThe server now has **{member_count}** members.",
+            "dm_enabled": true,
+            "dm_title": "Welcome to {server}!",
+            "dm_description": "Thanks for joining **{server}**!\n\nPlease make sure to read the rules and follow the server guidelines.",
+            "autorole_id": 1526615402006712340,
+            "ping_member": false,
+            "show_account_age": true,
+            "minimum_account_age_days": 7,
+            "rules_channel_id": 1523267020471275550,
+            "introduction_channel_id": 1522992649395503198,
+            "support_channel_id": null,
+            "welcome_count": 0,
+            "leave_count": 0
+        }
+    }
+}

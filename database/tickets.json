@@ -1,0 +1,22 @@
+{
+    "guilds": {
+        "1522992648661635184": {
+            "description": "Need help? Choose the option that best matches your issue. A staff member will assist you shortly.",
+            "moderator_role_id": 1523594889642774538,
+            "panel_channel_id": 1522992649395503198,
+            "panel_message_id": 1527027361445314621,
+            "ticket_counter": 4,
+            "options": [
+                {
+                    "key": "lund",
+                    "name": "Lund",
+                    "description": "kdkskda",
+                    "emoji": "\u26a0\ufe0f",
+                    "category_id": 1527018558721360003
+                }
+            ],
+            "open_tickets": {},
+            "logs_channel_id": null
+        }
+    }
+}

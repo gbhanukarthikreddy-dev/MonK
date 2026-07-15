@@ -1,0 +1,152 @@
+{
+    "guilds": {
+        "1522992648661635184": {
+            "starboard": {
+                "enabled": false,
+                "channel_id": null,
+                "emoji": "\u2b50",
+                "threshold": 3,
+                "allow_self_star": false,
+                "posts": {}
+            },
+            "counting": {
+                "enabled": false,
+                "channel_id": null,
+                "current": 0,
+                "last_user_id": null,
+                "high_score": 0,
+                "fails": 0
+            },
+            "leveling": {
+                "enabled": true,
+                "xp_min": 15,
+                "xp_max": 25,
+                "cooldown": 60,
+                "announce_channel_id": null,
+                "role_rewards": {},
+                "users": {
+                    "1396844211038458018": {
+                        "xp": 452,
+                        "messages": 47,
+                        "last_xp_at": 1784155755.1950622
+                    },
+                    "1363576256947290222": {
+                        "xp": 48,
+                        "messages": 4,
+                        "last_xp_at": 1784148914.7496095
+                    }
+                }
+            },
+            "economy": {
+                "enabled": false,
+                "currency_name": "coins",
+                "currency_symbol": "\ud83e\ude99",
+                "daily_min": 200,
+                "daily_max": 500,
+                "work_min": 100,
+                "work_max": 300,
+                "users": {},
+                "shop": {}
+            },
+            "temporary_voice": {
+                "enabled": true,
+                "lobby_channel_id": 1522992649395503199,
+                "category_id": 1522992649395503197,
+                "channels": {
+                    "1527076457204158736": {
+                        "owner_id": 1396844211038458018,
+                        "created_at": "2026-07-15T22:16:31.688644+00:00"
+                    }
+                }
+            },
+            "afk": {},
+            "reminders": {},
+            "polls": {
+                "1784143811153": {
+                    "question": "Best language?",
+                    "options": [
+                        "Python",
+                        "JavaScript",
+                        "Java"
+                    ],
+                    "creator_id": 1396844211038458018,
+                    "channel_id": 1522992649395503198,
+                    "message_id": 1527034599794806804,
+                    "created_at": "2026-07-15T19:30:11.153152+00:00",
+                    "ends_at": "2026-07-15T20:30:11.153129+00:00",
+                    "votes": {
+                        "0": [],
+                        "1": [],
+                        "2": [
+                            1396844211038458018
+                        ]
+                    },
+                    "ended": true
+                }
+            }
+        },
+        "1506883615118852157": {
+            "starboard": {
+                "enabled": false,
+                "channel_id": null,
+                "emoji": "\u2b50",
+                "threshold": 3,
+                "allow_self_star": false,
+                "posts": {}
+            },
+            "counting": {
+                "enabled": false,
+                "channel_id": null,
+                "current": 0,
+                "last_user_id": null,
+                "high_score": 0,
+                "fails": 0
+            },
+            "leveling": {
+                "enabled": true,
+                "xp_min": 15,
+                "xp_max": 25,
+                "cooldown": 60,
+                "announce_channel_id": null,
+                "role_rewards": {},
+                "users": {
+                    "1363576256947290222": {
+                        "xp": 374,
+                        "messages": 33,
+                        "last_xp_at": 1784155939.1517048
+                    },
+                    "1027101924052447262": {
+                        "xp": 183,
+                        "messages": 54,
+                        "last_xp_at": 1784147069.422986
+                    },
+                    "1396844211038458018": {
+                        "xp": 341,
+                        "messages": 35,
+                        "last_xp_at": 1784155891.482798
+                    }
+                }
+            },
+            "economy": {
+                "enabled": false,
+                "currency_name": "coins",
+                "currency_symbol": "\ud83e\ude99",
+                "daily_min": 200,
+                "daily_max": 500,
+                "work_min": 100,
+                "work_max": 300,
+                "users": {},
+                "shop": {}
+            },
+            "temporary_voice": {
+                "enabled": false,
+                "lobby_channel_id": null,
+                "category_id": null,
+                "channels": {}
+            },
+            "afk": {},
+            "reminders": {},
+            "polls": {}
+        }
+    }
+}
