@@ -30,6 +30,7 @@ DEFAULT_CONFIG: dict[str, Any] = {
     "ignored_channels": [],
     "verification_role": None,
     "join_to_create_category": None,
+    "disabled_modules": [],
 }
 
 

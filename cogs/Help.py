@@ -494,6 +494,13 @@ async def get_visible_commands(
         if command.parent is not None:
             continue
 
+        if ctx.guild:
+            from cogs.modules import command_module, is_module_disabled
+
+            module = command_module(command)
+            if module and is_module_disabled(ctx.guild.id, module):
+                continue
+
         if await can_show_command(ctx, command):
             visible.append(command)
 

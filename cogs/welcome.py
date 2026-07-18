@@ -7,6 +7,8 @@ from typing import Any, Optional
 import discord
 from discord.ext import commands
 
+from cogs.modules import is_module_disabled
+
 
 # =========================================================
 # COMPLETE WELCOME CONFIGURATION
@@ -1275,6 +1277,9 @@ class Welcome(commands.Cog):
         self,
         member: discord.Member,
     ):
+        if is_module_disabled(member.guild.id, "welcome"):
+            return
+
         config = welcome_db.get_guild(member.guild.id)
 
         # Autorole
@@ -1360,6 +1365,9 @@ class Welcome(commands.Cog):
         self,
         member: discord.Member,
     ):
+        if is_module_disabled(member.guild.id, "welcome"):
+            return
+
         config = welcome_db.get_guild(member.guild.id)
 
         if not config["goodbye_enabled"]:

@@ -11,6 +11,8 @@ from typing import Any, Optional
 import discord
 from discord.ext import commands, tasks
 
+from cogs.modules import is_module_disabled
+
 
 DATABASE_PATH = "database/advanced_moderation.json"
 
@@ -1866,7 +1868,13 @@ class AdvancedModeration(commands.Cog):
         if not message.guild:
             return
 
-        if not message.author.bot:
+        advanced_disabled = is_module_disabled(
+            message.guild.id,
+            "advanced_moderation",
+        )
+        automod_disabled = is_module_disabled(message.guild.id, "automod")
+
+        if not message.author.bot and not advanced_disabled:
             self.message_history_cache[
                 (message.guild.id, message.author.id)
             ].append(
@@ -1880,9 +1888,13 @@ class AdvancedModeration(commands.Cog):
         guild_data = await database.get_guild(message.guild.id)
         automod = guild_data["automod"]
 
-        if automod["enabled"] and not await self.automod_exempt(
+        if (
+            not automod_disabled
+            and automod["enabled"]
+            and not await self.automod_exempt(
             message,
             automod,
+            )
         ):
             reason = None
 
@@ -1936,13 +1948,20 @@ class AdvancedModeration(commands.Cog):
                 )
                 return
 
-        if str(message.channel.id) in guild_data["sticky_messages"]:
+        if (
+            not advanced_disabled
+            and str(message.channel.id) in guild_data["sticky_messages"]
+        ):
             await asyncio.sleep(1)
             await self.refresh_sticky(message)
 
     @commands.Cog.listener()
     async def on_message_delete(self, message: discord.Message):
-        if not message.guild or message.author.bot:
+        if (
+            not message.guild
+            or message.author.bot
+            or is_module_disabled(message.guild.id, "advanced_moderation")
+        ):
             return
 
         self.deleted_messages[message.channel.id].append(
@@ -1964,7 +1983,11 @@ class AdvancedModeration(commands.Cog):
         before: discord.Message,
         after: discord.Message,
     ):
-        if not before.guild or before.author.bot:
+        if (
+            not before.guild
+            or before.author.bot
+            or is_module_disabled(before.guild.id, "advanced_moderation")
+        ):
             return
 
         if before.content == after.content:
@@ -1986,6 +2009,9 @@ class AdvancedModeration(commands.Cog):
         before: discord.Member,
         after: discord.Member,
     ):
+        if is_module_disabled(after.guild.id, "advanced_moderation"):
+            return
+
         if before.nick == after.nick:
             return
 
@@ -2014,6 +2040,9 @@ class AdvancedModeration(commands.Cog):
 
     @commands.Cog.listener()
     async def on_member_join(self, member: discord.Member):
+        if is_module_disabled(member.guild.id, "advanced_moderation"):
+            return
+
         guild_data = await database.get_guild(member.guild.id)
         role_id = guild_data["jail"]["role_id"]
 
@@ -2038,6 +2067,9 @@ class AdvancedModeration(commands.Cog):
         now = datetime.now(timezone.utc)
 
         for guild in self.bot.guilds:
+            if is_module_disabled(guild.id, "advanced_moderation"):
+                continue
+
             guild_data = await database.get_guild(guild.id)
             temporary_roles = guild_data["temporary_roles"]
             changed = False

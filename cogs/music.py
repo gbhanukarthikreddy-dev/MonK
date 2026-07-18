@@ -1,11 +1,13 @@
 import asyncio
 import copy
 import json
+import logging
 import math
 import os
 import random
 from datetime import datetime, timezone
 from typing import Any, Optional
+from urllib.parse import urlsplit
 
 import discord
 from discord.ext import commands
@@ -18,14 +20,69 @@ import wavelink
 
 DATABASE_PATH = "database/music.json"
 
-LAVALINK_URI = os.getenv(
-    "LAVALINK_URI",
-    "http://127.0.0.1:2333",
-)
-LAVALINK_PASSWORD = os.getenv(
-    "LAVALINK_PASSWORD",
-    "monk_music",
-)
+log = logging.getLogger(__name__)
+
+
+def _env_list(name: str) -> list[str]:
+    return [value.strip() for value in os.getenv(name, "").split(",") if value.strip()]
+
+
+def _expand(values: list[str], count: int, name: str) -> list[str]:
+    if len(values) == 1:
+        return values * count
+    if len(values) != count:
+        raise RuntimeError(
+            f"{name} must contain either one value or {count} comma-separated values"
+        )
+    return values
+
+
+def lavalink_configs() -> list[tuple[str, str, str]]:
+    hosts = _env_list("LAVALINK_HOSTS")
+    if not hosts:
+        raise RuntimeError("LAVALINK_HOSTS must be set in .env")
+
+    ports = _expand(_env_list("LAVALINK_PORTS"), len(hosts), "LAVALINK_PORTS")
+    passwords = _expand(
+        _env_list("LAVALINK_PASSWORDS"),
+        len(hosts),
+        "LAVALINK_PASSWORDS",
+    )
+    secures = _expand(
+        _env_list("LAVALINK_SECURES") or ["false"],
+        len(hosts),
+        "LAVALINK_SECURES",
+    )
+
+    configs = []
+    for index, (host, port_text, password, secure_text) in enumerate(
+        zip(hosts, ports, passwords, secures),
+        start=1,
+    ):
+        try:
+            port = int(port_text)
+        except ValueError as error:
+            raise RuntimeError(f"Invalid Lavalink port: {port_text}") from error
+        if not 1 <= port <= 65535:
+            raise RuntimeError(f"Invalid Lavalink port: {port}")
+
+        secure_value = secure_text.lower()
+        if secure_value not in {"true", "false"}:
+            raise RuntimeError("LAVALINK_SECURES values must be true or false")
+
+        # Hosts are expected without a protocol, but accepting one makes the
+        # configuration tolerant of values copied from hosting dashboards.
+        parsed_host = urlsplit(host if "://" in host else f"//{host}")
+        clean_host = parsed_host.hostname
+        if not clean_host:
+            raise RuntimeError(f"Invalid Lavalink host: {host}")
+        if ":" in clean_host:
+            clean_host = f"[{clean_host}]"
+        scheme = "https" if secure_value == "true" else "http"
+        identifier = f"main-{index}"
+        configs.append((identifier, f"{scheme}://{clean_host}:{port}", password))
+
+    return configs
 
 ACCENT = discord.Color.from_rgb(198, 145, 73)
 SUCCESS = discord.Color.from_rgb(70, 190, 120)
@@ -2151,45 +2208,75 @@ class Music(commands.Cog):
 
     def __init__(self, bot: commands.Bot):
         self.bot = bot
-        self.node_task = asyncio.create_task(
-            self.connect_node()
-        )
+        self.node_tasks: list[asyncio.Task] = []
+        self.panel_updater: Optional[asyncio.Task] = None
+
+    async def cog_load(self):
+        configs = lavalink_configs()
+        self.node_tasks = [
+            asyncio.create_task(
+                self.connect_node(identifier, uri, password),
+                name=f"monk-lavalink-{identifier}",
+            )
+            for identifier, uri, password in configs
+        ]
         self.panel_updater = asyncio.create_task(
-            self.player_update_loop()
+            self.player_update_loop(),
+            name="monk-player-panel-updater",
         )
 
     def cog_unload(self):
         for task in (
-            self.node_task,
+            *self.node_tasks,
             self.panel_updater,
         ):
             if task and not task.done():
                 task.cancel()
 
-    async def connect_node(self):
+    async def connect_node(self, identifier: str, uri: str, password: str):
         await self.bot.wait_until_ready()
 
-        try:
-            node = wavelink.Node(
-                uri=LAVALINK_URI,
-                password=LAVALINK_PASSWORD,
-            )
+        retry_delay = 5
+        while not self.bot.is_closed():
+            try:
+                node = wavelink.Node(
+                    identifier=identifier,
+                    uri=uri,
+                    password=password,
+                )
 
-            await wavelink.Pool.connect(
-                nodes=[node],
-                client=self.bot,
-                cache_capacity=500,
-            )
+                nodes = await wavelink.Pool.connect(
+                    nodes=[node],
+                    client=self.bot,
+                    cache_capacity=500,
+                )
+                if identifier not in nodes:
+                    raise ConnectionError(
+                        "Lavalink rejected the connection; check the URI and password"
+                    )
 
-            print(
-                f"✅ Premium Music connected to Lavalink ({MUSIC_BUILD})"
-            )
+                log.info(
+                    "Music connected to Lavalink node %s (%s)",
+                    identifier,
+                    MUSIC_BUILD,
+                )
+                return
+            except asyncio.CancelledError:
+                raise
+            except Exception:
+                log.exception(
+                    "Lavalink connection failed; retrying in %s seconds",
+                    retry_delay,
+                )
+                await asyncio.sleep(retry_delay)
+                retry_delay = min(retry_delay * 2, 60)
 
-        except Exception as error:
-            print(
-                f"❌ Lavalink connection failed: "
-                f"{type(error).__name__}: {error}"
-            )
+    @staticmethod
+    def lavalink_ready() -> bool:
+        return any(
+            node.status is wavelink.NodeStatus.CONNECTED
+            for node in wavelink.Pool.nodes.values()
+        )
 
     async def player_update_loop(self):
         await self.bot.wait_until_ready()
@@ -2217,6 +2304,16 @@ class Music(commands.Cog):
         self,
         ctx: commands.Context,
     ) -> Optional[wavelink.Player]:
+        if not self.lavalink_ready():
+            await ctx.send(
+                view=MusicResponse(
+                    "Music Node Unavailable",
+                    "The Lavalink node is still connecting. Try again shortly.",
+                    success=False,
+                )
+            )
+            return None
+
         if (
             not isinstance(ctx.author, discord.Member)
             or not ctx.author.voice
@@ -2275,6 +2372,17 @@ class Music(commands.Cog):
         interaction: discord.Interaction,
     ) -> Optional[wavelink.Player]:
         if not interaction.guild:
+            return None
+
+        if not self.lavalink_ready():
+            await interaction.followup.send(
+                view=MusicResponse(
+                    "Music Node Unavailable",
+                    "The Lavalink node is still connecting. Try again shortly.",
+                    success=False,
+                ),
+                ephemeral=True,
+            )
             return None
 
         member = interaction.user

@@ -8,11 +8,6 @@ __pycache__/
 venv/
 .venv/
 
-# Lavalink
-lavalink/Lavalink.jar
-lavalink/logs/
-lavalink/plugins/
-
 # Local data and logs
 *.log
 .DS_Store
