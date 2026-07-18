@@ -12,6 +12,8 @@ from typing import Any, Optional
 import discord
 from discord.ext import commands, tasks
 
+from cogs.modules import is_module_disabled
+
 
 # =========================================================
 # CONFIGURATION
@@ -1929,12 +1931,15 @@ class UtilitySuite(commands.Cog):
 
         guild_data = await utility_db.get_guild(message.guild.id)
         changed = False
+        utility_disabled = is_module_disabled(message.guild.id, "utility")
 
         # AFK return
-        afk_entry = guild_data["afk"].pop(
-            str(message.author.id),
-            None,
-        )
+        afk_entry = None
+        if not utility_disabled:
+            afk_entry = guild_data["afk"].pop(
+                str(message.author.id),
+                None,
+            )
 
         if afk_entry:
             changed = True
@@ -1968,7 +1973,7 @@ class UtilitySuite(commands.Cog):
         # AFK mentions
         mentioned_afk = []
 
-        for member in message.mentions[:10]:
+        for member in message.mentions[:10] if not utility_disabled else []:
             entry = guild_data["afk"].get(str(member.id))
 
             if entry:
@@ -1995,7 +2000,8 @@ class UtilitySuite(commands.Cog):
         counting = guild_data["counting"]
 
         if (
-            counting["enabled"]
+            not utility_disabled
+            and counting["enabled"]
             and message.channel.id == counting["channel_id"]
         ):
             await self.handle_counting(
@@ -2007,7 +2013,10 @@ class UtilitySuite(commands.Cog):
         # Leveling
         leveling = guild_data["leveling"]
 
-        if leveling["enabled"]:
+        if (
+            leveling["enabled"]
+            and not is_module_disabled(message.guild.id, "leveling")
+        ):
             user = leveling_user(
                 leveling,
                 message.author.id,
@@ -2163,7 +2172,11 @@ class UtilitySuite(commands.Cog):
         self,
         payload: discord.RawReactionActionEvent,
     ):
-        if not payload.guild_id or payload.user_id == self.bot.user.id:
+        if (
+            not payload.guild_id
+            or payload.user_id == self.bot.user.id
+            or is_module_disabled(payload.guild_id, "utility")
+        ):
             return
 
         await self.update_starboard(payload)
@@ -2173,7 +2186,10 @@ class UtilitySuite(commands.Cog):
         self,
         payload: discord.RawReactionActionEvent,
     ):
-        if not payload.guild_id:
+        if (
+            not payload.guild_id
+            or is_module_disabled(payload.guild_id, "utility")
+        ):
             return
 
         await self.update_starboard(payload)
@@ -2277,6 +2293,9 @@ class UtilitySuite(commands.Cog):
         before: discord.VoiceState,
         after: discord.VoiceState,
     ):
+        if is_module_disabled(member.guild.id, "voice"):
+            return
+
         guild_data = await utility_db.get_guild(member.guild.id)
         data = guild_data["temporary_voice"]
 
