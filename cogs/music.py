@@ -1762,7 +1762,6 @@ class PlayerPanel(MusicInteractionView):
             )
 
             button = discord.ui.Button(
-                label=label,
                 emoji=custom_emoji,
                 style=discord.ButtonStyle.secondary,
                 custom_id=(
