@@ -46,7 +46,7 @@ DEFAULT_GUILD_DATA: dict[str, Any] = {
         "fails": 0,
     },
     "leveling": {
-        "enabled": True,
+        "enabled": False,
         "xp_min": 15,
         "xp_max": 25,
         "cooldown": 60,
