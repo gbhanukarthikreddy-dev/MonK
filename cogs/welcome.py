@@ -8,6 +8,7 @@ import discord
 from discord.ext import commands
 
 from cogs.modules import is_module_disabled
+from cogs.setup import get_config_value
 
 
 # =========================================================
@@ -68,6 +69,30 @@ DEFAULT_CONFIG: dict[str, Any] = {
     "welcome_count": 0,
     "leave_count": 0,
 }
+
+
+def get_welcome_channel_id(guild_id: int) -> Optional[int]:
+    config = welcome_db.get_guild(guild_id)
+    channel_id = config.get("welcome_channel_id")
+    if channel_id:
+        return channel_id
+    return get_config_value(guild_id, "welcome_channel")
+
+
+def get_goodbye_channel_id(guild_id: int) -> Optional[int]:
+    config = welcome_db.get_guild(guild_id)
+    channel_id = config.get("goodbye_channel_id")
+    if channel_id:
+        return channel_id
+    return get_config_value(guild_id, "leave_channel")
+
+
+def get_autorole_id(guild_id: int) -> Optional[int]:
+    config = welcome_db.get_guild(guild_id)
+    role_id = config.get("autorole_id")
+    if role_id:
+        return role_id
+    return get_config_value(guild_id, "auto_role")
 
 
 # =========================================================
@@ -1199,13 +1224,15 @@ class WelcomeConfigView(discord.ui.LayoutView):
         config = welcome_db.get_guild(interaction.guild.id)
 
         welcome_channel = interaction.guild.get_channel(
-            config["welcome_channel_id"]
+            config.get("welcome_channel_id")
+            or get_config_value(interaction.guild.id, "welcome_channel")
         )
         goodbye_channel = interaction.guild.get_channel(
             config["goodbye_channel_id"]
         )
         autorole = interaction.guild.get_role(
-            config["autorole_id"]
+            config.get("autorole_id")
+            or get_config_value(interaction.guild.id, "auto_role")
         )
 
         await interaction.response.send_message(
@@ -1283,7 +1310,10 @@ class Welcome(commands.Cog):
         config = welcome_db.get_guild(member.guild.id)
 
         # Autorole
-        role_id = config.get("autorole_id")
+        role_id = config.get("autorole_id") or get_config_value(
+            member.guild.id,
+            "auto_role",
+        )
 
         if role_id:
             role = member.guild.get_role(role_id)
@@ -1304,7 +1334,8 @@ class Welcome(commands.Cog):
         # Welcome channel message
         if config["enabled"]:
             channel = member.guild.get_channel(
-                config["welcome_channel_id"]
+                config.get("welcome_channel_id")
+                or get_config_value(member.guild.id, "welcome_channel")
             )
 
             if isinstance(channel, discord.TextChannel):
@@ -1374,7 +1405,8 @@ class Welcome(commands.Cog):
             return
 
         channel = member.guild.get_channel(
-            config["goodbye_channel_id"]
+            config.get("goodbye_channel_id")
+            or get_goodbye_channel_id(member.guild.id)
         )
 
         if not isinstance(channel, discord.TextChannel):
